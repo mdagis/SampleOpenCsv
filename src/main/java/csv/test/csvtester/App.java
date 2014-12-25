@@ -1,9 +1,11 @@
 package csv.test.csvtester;
 
 import au.com.bytecode.opencsv.CSVReader;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Hello world!
@@ -11,22 +13,27 @@ import java.io.IOException;
  */
 public class App {
 
+    private static final char DELIMITER = '\t';
+    private static final String UTF8 = "UTF8";
+    private static final String FILE_PATH = "person.txt";
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        FileReader fr = new FileReader("C:\\Temp\\person_cut.txt");
-        CSVReader reader = new CSVReader(fr,'\t');
+
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(FILE_PATH), UTF8));
+
+        CSVReader csvReader = new CSVReader(bufferedReader, DELIMITER);
         String[] nextLine;
-        while ((nextLine = reader.readNext()) != null) {
-            //test
+        while ((nextLine = csvReader.readNext()) != null) {
             // nextLine[] is an array of values from the line
-            //System.out.println(nextLine[0] + nextLine[1] + "etc...");
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < nextLine.length; i++){
-                sb.append(nextLine[i]);
-                sb.append("^");
+            for (String producedLine : nextLine) {
+                sb.append(producedLine);
+                sb.append(DELIMITER);
             }
             System.out.println(sb.toString());
         }
-
-        System.out.println("Hello World!");
     }
+
 }
