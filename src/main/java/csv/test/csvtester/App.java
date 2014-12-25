@@ -16,6 +16,7 @@ public class App {
         CSVReader reader = new CSVReader(fr,'\t');
         String[] nextLine;
         while ((nextLine = reader.readNext()) != null) {
+            //test
             // nextLine[] is an array of values from the line
             //System.out.println(nextLine[0] + nextLine[1] + "etc...");
             StringBuilder sb = new StringBuilder();
